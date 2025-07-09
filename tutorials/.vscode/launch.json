@@ -1,0 +1,328 @@
+{
+    "// 学生管理系统教程 - VS Code 调试配置": "",
+    "// 提供便捷的调试功能": "",
+    
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "调试当前文件",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}/${fileBasenameNoExtension}_debug",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "为 gdb 启用整齐打印",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "将反汇编风格设置为 Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "调试当前文件",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "logging": {
+                "moduleLoad": false,
+                "trace": false,
+                "engineLogging": false,
+                "programOutput": true,
+                "exceptions": true
+            },
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "调试C语言基础示例",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/tutorials/build/examples/basic_example",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/tutorials",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "为 gdb 启用整齐打印",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "编译调试版本",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "调试结构体数组示例",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/tutorials/build/examples/struct_array_example",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/tutorials",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "为 gdb 启用整齐打印",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "编译调试版本",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "调试文件操作示例",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/tutorials/build/examples/file_operations_example",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/tutorials",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "为 gdb 启用整齐打印",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "编译调试版本",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "调试练习1解决方案",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/tutorials/build/solutions/solution_01",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/tutorials",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "为 gdb 启用整齐打印",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "设置断点在main函数",
+                    "text": "-break-insert main",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "编译调试版本",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "调试练习2解决方案",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/tutorials/build/solutions/solution_02",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/tutorials",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "为 gdb 启用整齐打印",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "编译调试版本",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "调试练习3解决方案",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/tutorials/build/solutions/solution_03",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/tutorials",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "为 gdb 启用整齐打印",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "编译调试版本",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Valgrind内存检查 - 当前文件",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/usr/bin/valgrind",
+            "args": [
+                "--tool=memcheck",
+                "--leak-check=full",
+                "--show-leak-kinds=all",
+                "--track-origins=yes",
+                "--verbose",
+                "${fileDirname}/${fileBasenameNoExtension}_debug"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "preLaunchTask": "调试当前文件",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Valgrind内存检查 - 解决方案1",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/usr/bin/valgrind",
+            "args": [
+                "--tool=memcheck",
+                "--leak-check=full",
+                "--show-leak-kinds=all",
+                "--track-origins=yes",
+                "--verbose",
+                "${workspaceFolder}/tutorials/build/solutions/solution_01"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/tutorials",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "preLaunchTask": "编译调试版本",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "GDB命令行调试",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/tutorials/build/solutions/solution_01",
+            "args": [],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}/tutorials",
+            "environment": [],
+            "externalConsole": true,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "为 gdb 启用整齐打印",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "显示所有信号",
+                    "text": "handle all print",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "设置历史记录",
+                    "text": "set history save on",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "设置历史记录文件",
+                    "text": "set history filename ~/.gdb_history",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "编译调试版本",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "console": "externalTerminal"
+        },
+        {
+            "name": "附加到进程",
+            "type": "cppdbg",
+            "request": "attach",
+            "program": "${workspaceFolder}/tutorials/build/solutions/solution_01",
+            "processId": "${command:pickProcess}",
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "为 gdb 启用整齐打印",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "核心转储调试",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/tutorials/build/solutions/solution_01",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/tutorials",
+            "environment": [
+                {
+                    "name": "MALLOC_CHECK_",
+                    "value": "2"
+                }
+            ],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "为 gdb 启用整齐打印",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "启用核心转储",
+                    "text": "set environment MALLOC_CHECK_ 2",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "编译调试版本",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "console": "integratedTerminal"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "调试所有解决方案",
+            "configurations": [
+                "调试练习1解决方案",
+                "调试练习2解决方案",
+                "调试练习3解决方案"
+            ],
+            "stopAll": true,
+            "preLaunchTask": "编译调试版本"
+        },
+        {
+            "name": "调试所有示例",
+            "configurations": [
+                "调试C语言基础示例",
+                "调试结构体数组示例",
+                "调试文件操作示例"
+            ],
+            "stopAll": true,
+            "preLaunchTask": "编译调试版本"
+        }
+    ]
+}

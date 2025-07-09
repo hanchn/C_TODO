@@ -1,0 +1,438 @@
+{
+    "// 学生管理系统教程 - C语言代码片段": "",
+    "// 提供常用的C语言代码模板": "",
+    
+    "C Main Function": {
+        "prefix": "main",
+        "body": [
+            "#include <stdio.h>",
+            "#include <stdlib.h>",
+            "",
+            "int main() {",
+            "    $1",
+            "    return 0;",
+            "}"
+        ],
+        "description": "C语言主函数模板"
+    },
+    
+    "C Main Function with Arguments": {
+        "prefix": "mainargs",
+        "body": [
+            "#include <stdio.h>",
+            "#include <stdlib.h>",
+            "",
+            "int main(int argc, char *argv[]) {",
+            "    if (argc < 2) {",
+            "        printf(\"Usage: %s <arguments>\\n\", argv[0]);",
+            "        return 1;",
+            "    }",
+            "    ",
+            "    $1",
+            "    return 0;",
+            "}"
+        ],
+        "description": "带命令行参数的主函数模板"
+    },
+    
+    "Student Structure": {
+        "prefix": "student",
+        "body": [
+            "typedef struct {",
+            "    int id;",
+            "    char name[50];",
+            "    int age;",
+            "    float score;",
+            "} Student;"
+        ],
+        "description": "学生结构体定义"
+    },
+    
+    "Student Management System": {
+        "prefix": "sms",
+        "body": [
+            "#define MAX_STUDENTS 100",
+            "",
+            "typedef struct {",
+            "    int id;",
+            "    char name[50];",
+            "    int age;",
+            "    float score;",
+            "} Student;",
+            "",
+            "typedef struct {",
+            "    Student students[MAX_STUDENTS];",
+            "    int count;",
+            "} StudentSystem;",
+            "",
+            "// 初始化学生管理系统",
+            "void init_system(StudentSystem *system) {",
+            "    system->count = 0;",
+            "}",
+            "",
+            "// 添加学生",
+            "int add_student(StudentSystem *system, int id, const char *name, int age, float score) {",
+            "    if (system->count >= MAX_STUDENTS) {",
+            "        return 0; // 系统已满",
+            "    }",
+            "    ",
+            "    Student *student = &system->students[system->count];",
+            "    student->id = id;",
+            "    strncpy(student->name, name, sizeof(student->name) - 1);",
+            "    student->name[sizeof(student->name) - 1] = '\\0';",
+            "    student->age = age;",
+            "    student->score = score;",
+            "    ",
+            "    system->count++;",
+            "    return 1; // 成功",
+            "}"
+        ],
+        "description": "学生管理系统基础结构"
+    },
+    
+    "Function Template": {
+        "prefix": "func",
+        "body": [
+            "/**",
+            " * $1",
+            " * @param $2",
+            " * @return $3",
+            " */",
+            "$4 $5($6) {",
+            "    $7",
+            "}"
+        ],
+        "description": "函数模板带注释"
+    },
+    
+    "For Loop": {
+        "prefix": "for",
+        "body": [
+            "for (int ${1:i} = 0; ${1:i} < ${2:count}; ${1:i}++) {",
+            "    $3",
+            "}"
+        ],
+        "description": "for循环模板"
+    },
+    
+    "While Loop": {
+        "prefix": "while",
+        "body": [
+            "while (${1:condition}) {",
+            "    $2",
+            "}"
+        ],
+        "description": "while循环模板"
+    },
+    
+    "If Statement": {
+        "prefix": "if",
+        "body": [
+            "if (${1:condition}) {",
+            "    $2",
+            "}"
+        ],
+        "description": "if语句模板"
+    },
+    
+    "If Else Statement": {
+        "prefix": "ifelse",
+        "body": [
+            "if (${1:condition}) {",
+            "    $2",
+            "} else {",
+            "    $3",
+            "}"
+        ],
+        "description": "if-else语句模板"
+    },
+    
+    "Switch Statement": {
+        "prefix": "switch",
+        "body": [
+            "switch (${1:variable}) {",
+            "    case ${2:value1}:",
+            "        $3",
+            "        break;",
+            "    case ${4:value2}:",
+            "        $5",
+            "        break;",
+            "    default:",
+            "        $6",
+            "        break;",
+            "}"
+        ],
+        "description": "switch语句模板"
+    },
+    
+    "File Operations": {
+        "prefix": "fileops",
+        "body": [
+            "FILE *file = fopen(\"${1:filename}\", \"${2:mode}\");",
+            "if (file == NULL) {",
+            "    perror(\"无法打开文件\");",
+            "    return ${3:-1};",
+            "}",
+            "",
+            "$4",
+            "",
+            "fclose(file);"
+        ],
+        "description": "文件操作模板"
+    },
+    
+    "Memory Allocation": {
+        "prefix": "malloc",
+        "body": [
+            "${1:type} *${2:ptr} = (${1:type}*)malloc(${3:size} * sizeof(${1:type}));",
+            "if (${2:ptr} == NULL) {",
+            "    fprintf(stderr, \"内存分配失败\\n\");",
+            "    return ${4:-1};",
+            "}",
+            "",
+            "$5",
+            "",
+            "free(${2:ptr});",
+            "${2:ptr} = NULL;"
+        ],
+        "description": "动态内存分配模板"
+    },
+    
+    "Error Handling": {
+        "prefix": "error",
+        "body": [
+            "if (${1:condition}) {",
+            "    fprintf(stderr, \"错误: ${2:message}\\n\");",
+            "    return ${3:-1};",
+            "}"
+        ],
+        "description": "错误处理模板"
+    },
+    
+    "Debug Print": {
+        "prefix": "debug",
+        "body": [
+            "#ifdef DEBUG",
+            "printf(\"DEBUG: ${1:message}\\n\");",
+            "#endif"
+        ],
+        "description": "调试输出模板"
+    },
+    
+    "Header Guard": {
+        "prefix": "guard",
+        "body": [
+            "#ifndef ${1:HEADER_NAME}_H",
+            "#define ${1:HEADER_NAME}_H",
+            "",
+            "$2",
+            "",
+            "#endif // ${1:HEADER_NAME}_H"
+        ],
+        "description": "头文件保护模板"
+    },
+    
+    "Include Headers": {
+        "prefix": "includes",
+        "body": [
+            "#include <stdio.h>",
+            "#include <stdlib.h>",
+            "#include <string.h>",
+            "#include <stdbool.h>",
+            "#include <assert.h>"
+        ],
+        "description": "常用头文件包含"
+    },
+    
+    "Struct Definition": {
+        "prefix": "struct",
+        "body": [
+            "typedef struct {",
+            "    ${1:int member1};",
+            "    ${2:char member2[50]};",
+            "    $3",
+            "} ${4:StructName};"
+        ],
+        "description": "结构体定义模板"
+    },
+    
+    "Enum Definition": {
+        "prefix": "enum",
+        "body": [
+            "typedef enum {",
+            "    ${1:VALUE1},",
+            "    ${2:VALUE2},",
+            "    ${3:VALUE3}",
+            "} ${4:EnumName};"
+        ],
+        "description": "枚举定义模板"
+    },
+    
+    "Array Declaration": {
+        "prefix": "array",
+        "body": [
+            "${1:int} ${2:array}[${3:SIZE}];",
+            "for (int i = 0; i < ${3:SIZE}; i++) {",
+            "    ${2:array}[i] = ${4:0};",
+            "}"
+        ],
+        "description": "数组声明和初始化模板"
+    },
+    
+    "String Operations": {
+        "prefix": "strops",
+        "body": [
+            "char ${1:str1}[${2:SIZE}];",
+            "char ${3:str2}[${2:SIZE}];",
+            "",
+            "// 字符串复制",
+            "strncpy(${1:str1}, \"${4:source}\", sizeof(${1:str1}) - 1);",
+            "${1:str1}[sizeof(${1:str1}) - 1] = '\\0';",
+            "",
+            "// 字符串比较",
+            "if (strcmp(${1:str1}, ${3:str2}) == 0) {",
+            "    $5",
+            "}"
+        ],
+        "description": "字符串操作模板"
+    },
+    
+    "Menu System": {
+        "prefix": "menu",
+        "body": [
+            "void show_menu() {",
+            "    printf(\"\\n=== ${1:系统名称} ===\\n\");",
+            "    printf(\"1. ${2:选项1}\\n\");",
+            "    printf(\"2. ${3:选项2}\\n\");",
+            "    printf(\"3. ${4:选项3}\\n\");",
+            "    printf(\"0. 退出\\n\");",
+            "    printf(\"请选择: \");",
+            "}",
+            "",
+            "int get_choice() {",
+            "    int choice;",
+            "    if (scanf(\"%d\", &choice) != 1) {",
+            "        while (getchar() != '\\n'); // 清空输入缓冲区",
+            "        return -1;",
+            "    }",
+            "    while (getchar() != '\\n'); // 清空输入缓冲区",
+            "    return choice;",
+            "}"
+        ],
+        "description": "菜单系统模板"
+    },
+    
+    "Input Validation": {
+        "prefix": "input",
+        "body": [
+            "int get_${1:type}_input(const char *prompt, ${2:int} *value) {",
+            "    printf(\"%s\", prompt);",
+            "    if (scanf(\"${3:%d}\", value) != 1) {",
+            "        while (getchar() != '\\n'); // 清空输入缓冲区",
+            "        printf(\"输入无效，请重新输入\\n\");",
+            "        return 0;",
+            "    }",
+            "    while (getchar() != '\\n'); // 清空输入缓冲区",
+            "    return 1;",
+            "}"
+        ],
+        "description": "输入验证模板"
+    },
+    
+    "Test Function": {
+        "prefix": "test",
+        "body": [
+            "void test_${1:function_name}() {",
+            "    printf(\"测试 ${1:function_name}...\\n\");",
+            "    ",
+            "    // 测试用例1",
+            "    ${2:// 测试代码}",
+            "    ",
+            "    // 测试用例2",
+            "    ${3:// 测试代码}",
+            "    ",
+            "    printf(\"${1:function_name} 测试完成\\n\");",
+            "}"
+        ],
+        "description": "测试函数模板"
+    },
+    
+    "Assert Macro": {
+        "prefix": "assert",
+        "body": [
+            "#define ASSERT(condition, message) \\",
+            "    do { \\",
+            "        if (!(condition)) { \\",
+            "            fprintf(stderr, \"断言失败: %s (文件: %s, 行: %d)\\n\", \\",
+            "                    message, __FILE__, __LINE__); \\",
+            "            exit(EXIT_FAILURE); \\",
+            "        } \\",
+            "    } while(0)"
+        ],
+        "description": "自定义断言宏"
+    },
+    
+    "Linked List Node": {
+        "prefix": "listnode",
+        "body": [
+            "typedef struct ${1:Node} {",
+            "    ${2:int data};",
+            "    struct ${1:Node} *next;",
+            "} ${1:Node};",
+            "",
+            "${1:Node}* create_node(${2:int data}) {",
+            "    ${1:Node} *node = (${1:Node}*)malloc(sizeof(${1:Node}));",
+            "    if (node == NULL) {",
+            "        return NULL;",
+            "    }",
+            "    node->data = data;",
+            "    node->next = NULL;",
+            "    return node;",
+            "}"
+        ],
+        "description": "链表节点模板"
+    },
+    
+    "Binary Search": {
+        "prefix": "bsearch",
+        "body": [
+            "int binary_search(${1:int} arr[], int size, ${1:int} target) {",
+            "    int left = 0, right = size - 1;",
+            "    ",
+            "    while (left <= right) {",
+            "        int mid = left + (right - left) / 2;",
+            "        ",
+            "        if (arr[mid] == target) {",
+            "            return mid;",
+            "        } else if (arr[mid] < target) {",
+            "            left = mid + 1;",
+            "        } else {",
+            "            right = mid - 1;",
+            "        }",
+            "    }",
+            "    ",
+            "    return -1; // 未找到",
+            "}"
+        ],
+        "description": "二分查找算法模板"
+    },
+    
+    "Bubble Sort": {
+        "prefix": "bubblesort",
+        "body": [
+            "void bubble_sort(${1:int} arr[], int size) {",
+            "    for (int i = 0; i < size - 1; i++) {",
+            "        for (int j = 0; j < size - i - 1; j++) {",
+            "            if (arr[j] > arr[j + 1]) {",
+            "                // 交换元素",
+            "                ${1:int} temp = arr[j];",
+            "                arr[j] = arr[j + 1];",
+            "                arr[j + 1] = temp;",
+            "            }",
+            "        }",
+            "    }",
+            "}"
+        ],
+        "description": "冒泡排序算法模板"
+    }
+}

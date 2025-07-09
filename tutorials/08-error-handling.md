@@ -1464,3 +1464,371 @@ void test_add_duplicate_student() {
         .name = "李四",
         .age = 21,
         .math_score = 90.0,
+        .english_score = 85.0,
+        .chinese_score = 92.0
+    };
+    
+    add_student_with_error_handling(&system, &student1);
+    int result = add_student_with_error_handling(&system, &student2);
+    
+    TEST_ASSERT_EQUAL_INT(ERROR_STUDENT_EXISTS, result, "添加重复学号的学生应该失败");
+    TEST_ASSERT_EQUAL_INT(1, system.count, "学生数量应该仍为1");
+    TEST_ASSERT_EQUAL_STRING("张三", system.students[0].name, "第一个学生应该保留");
+}
+
+// 测试查找学生
+void test_find_student() {
+    StudentSystem system;
+    init_system(&system);
+    
+    Student student1 = {"2024001", "张三", 20, 85.5, 92.0, 88.5, 0};
+    Student student2 = {"2024002", "李四", 21, 90.0, 85.0, 92.0, 0};
+    
+    calculate_average(&student1);
+    calculate_average(&student2);
+    
+    add_student_with_error_handling(&system, &student1);
+    add_student_with_error_handling(&system, &student2);
+    
+    int index = find_student_by_id(&system, "2024002");
+    TEST_ASSERT_EQUAL_INT(1, index, "应该找到第二个学生");
+    
+    index = find_student_by_id(&system, "2024003");
+    TEST_ASSERT_EQUAL_INT(-1, index, "不存在的学号应该返回-1");
+}
+
+// 测试删除学生
+void test_delete_student() {
+    StudentSystem system;
+    init_system(&system);
+    
+    Student student1 = {"2024001", "张三", 20, 85.5, 92.0, 88.5, 0};
+    Student student2 = {"2024002", "李四", 21, 90.0, 85.0, 92.0, 0};
+    
+    calculate_average(&student1);
+    calculate_average(&student2);
+    
+    add_student_with_error_handling(&system, &student1);
+    add_student_with_error_handling(&system, &student2);
+    
+    int result = delete_student_by_id(&system, "2024001");
+    TEST_ASSERT_EQUAL_INT(SUCCESS, result, "删除存在的学生应该成功");
+    TEST_ASSERT_EQUAL_INT(1, system.count, "删除后学生数量应该为1");
+    TEST_ASSERT_EQUAL_STRING("2024002", system.students[0].id, "剩余学生应该是李四");
+    
+    result = delete_student_by_id(&system, "2024003");
+    TEST_ASSERT_EQUAL_INT(ERROR_STUDENT_NOT_FOUND, result, "删除不存在的学生应该失败");
+}
+
+// 运行所有测试
+void run_student_system_tests() {
+    TEST_SUITE_BEGIN("学生管理系统测试");
+    
+    run_test("系统初始化", test_system_initialization);
+    run_test("添加学生", test_add_student);
+    run_test("添加重复学生", test_add_duplicate_student);
+    run_test("查找学生", test_find_student);
+    run_test("删除学生", test_delete_student);
+    
+    TEST_SUITE_END("学生管理系统测试");
+}
+
+// 主测试函数
+int main() {
+    printf("开始运行单元测试...\n");
+    
+    run_student_system_tests();
+    
+    print_test_summary();
+    return g_test_results.failed_tests > 0 ? 1 : 0;
+}
+```
+
+---
+
+## 内存管理与检测
+
+### 内存泄漏检测
+
+```c
+// memory_check.h
+#ifndef MEMORY_CHECK_H
+#define MEMORY_CHECK_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// 内存分配跟踪结构
+typedef struct MemoryAllocation {
+    void *ptr;
+    size_t size;
+    char file[128];
+    int line;
+    struct MemoryAllocation *next;
+} MemoryAllocation;
+
+// 内存统计
+typedef struct {
+    size_t total_allocated;
+    size_t total_freed;
+    size_t current_usage;
+    size_t peak_usage;
+    size_t allocation_count;
+    size_t free_count;
+} MemoryStats;
+
+// 内存检测函数
+void memory_check_init();
+void memory_check_cleanup();
+void* memory_check_malloc(size_t size, const char *file, int line);
+void memory_check_free(void *ptr, const char *file, int line);
+void memory_check_report();
+MemoryStats memory_check_get_stats();
+
+// 替换标准内存函数的宏
+#ifdef MEMORY_CHECK
+    #define malloc(size) memory_check_malloc((size), __FILE__, __LINE__)
+    #define free(ptr) memory_check_free((ptr), __FILE__, __LINE__)
+    #define MEMORY_REPORT() memory_check_report()
+#else
+    #define MEMORY_REPORT()
+#endif
+
+#endif // MEMORY_CHECK_H
+```
+
+### 内存检测实现
+
+```c
+// memory_check.c
+#include "memory_check.h"
+
+// 全局变量
+static MemoryAllocation *allocations = NULL;
+static MemoryStats stats = {0};
+
+// 初始化内存检测
+void memory_check_init() {
+    allocations = NULL;
+    memset(&stats, 0, sizeof(MemoryStats));
+    printf("内存检测系统已初始化\n");
+}
+
+// 清理内存检测
+void memory_check_cleanup() {
+    memory_check_report();
+    
+    // 释放内存分配记录
+    MemoryAllocation *current = allocations;
+    while (current != NULL) {
+        MemoryAllocation *next = current->next;
+        free(current);
+        current = next;
+    }
+    
+    allocations = NULL;
+    printf("内存检测系统已清理\n");
+}
+
+// 分配内存并跟踪
+void* memory_check_malloc(size_t size, const char *file, int line) {
+    void *ptr = malloc(size);
+    if (ptr == NULL) {
+        fprintf(stderr, "内存分配失败: %zu 字节 (%s:%d)\n", size, file, line);
+        return NULL;
+    }
+    
+    // 创建分配记录
+    MemoryAllocation *record = malloc(sizeof(MemoryAllocation));
+    if (record == NULL) {
+        fprintf(stderr, "无法为内存跟踪分配内存 (%s:%d)\n", file, line);
+        return ptr;
+    }
+    
+    // 初始化记录
+    record->ptr = ptr;
+    record->size = size;
+    strncpy(record->file, file, sizeof(record->file) - 1);
+    record->file[sizeof(record->file) - 1] = '\0';
+    record->line = line;
+    
+    // 添加到链表
+    record->next = allocations;
+    allocations = record;
+    
+    // 更新统计信息
+    stats.total_allocated += size;
+    stats.current_usage += size;
+    stats.allocation_count++;
+    
+    if (stats.current_usage > stats.peak_usage) {
+        stats.peak_usage = stats.current_usage;
+    }
+    
+    return ptr;
+}
+
+// 释放内存并跟踪
+void memory_check_free(void *ptr, const char *file, int line) {
+    if (ptr == NULL) {
+        fprintf(stderr, "尝试释放空指针 (%s:%d)\n", file, line);
+        return;
+    }
+    
+    // 查找分配记录
+    MemoryAllocation **current = &allocations;
+    while (*current != NULL) {
+        if ((*current)->ptr == ptr) {
+            // 找到记录
+            MemoryAllocation *record = *current;
+            *current = record->next;
+            
+            // 更新统计信息
+            stats.total_freed += record->size;
+            stats.current_usage -= record->size;
+            stats.free_count++;
+            
+            // 释放记录和指针
+            free(record);
+            free(ptr);
+            return;
+        }
+        current = &(*current)->next;
+    }
+    
+    fprintf(stderr, "尝试释放未分配的内存: %p (%s:%d)\n", ptr, file, line);
+    free(ptr);
+}
+
+// 生成内存报告
+void memory_check_report() {
+    printf("\n=== 内存使用报告 ===\n");
+    printf("总分配: %zu 字节 (%zu 次)\n", stats.total_allocated, stats.allocation_count);
+    printf("总释放: %zu 字节 (%zu 次)\n", stats.total_freed, stats.free_count);
+    printf("当前使用: %zu 字节\n", stats.current_usage);
+    printf("峰值使用: %zu 字节\n", stats.peak_usage);
+    
+    if (stats.current_usage > 0) {
+        printf("\n未释放的内存:\n");
+        int count = 0;
+        MemoryAllocation *current = allocations;
+        
+        while (current != NULL) {
+            printf("  %p: %zu 字节 (%s:%d)\n", 
+                   current->ptr, current->size, current->file, current->line);
+            current = current->next;
+            count++;
+        }
+        
+        printf("\n总计 %d 处内存泄漏，共 %zu 字节\n", count, stats.current_usage);
+    } else {
+        printf("\n没有内存泄漏\n");
+    }
+    
+    printf("==================\n");
+}
+
+// 获取内存统计信息
+MemoryStats memory_check_get_stats() {
+    return stats;
+}
+```
+
+---
+
+## 实践练习
+
+### 练习1：实现自定义断言宏
+
+```c
+// 练习：实现自定义断言宏
+// 要求：
+// 1. 创建一个ASSERT_STUDENT_VALID宏，用于验证学生数据的有效性
+// 2. 宏应该检查学号、姓名、年龄和成绩的有效性
+// 3. 如果验证失败，应该打印详细的错误信息
+
+#define ASSERT_STUDENT_VALID(student) \
+    /* TODO: 实现学生数据验证断言 */
+```
+
+### 练习2：实现错误恢复机制
+
+```c
+// 练习：实现错误恢复机制
+// 要求：
+// 1. 修改文件操作函数，添加自动恢复功能
+// 2. 当文件打开失败时，尝试从备份文件恢复
+// 3. 实现一个事务系统，确保数据操作的原子性
+
+int save_with_recovery(StudentSystem *system) {
+    // TODO: 实现带恢复机制的保存函数
+}
+```
+
+### 练习3：实现完整的单元测试
+
+```c
+// 练习：为学生管理系统实现完整的单元测试
+// 要求：
+// 1. 为每个核心功能编写测试用例
+// 2. 测试边界条件和错误情况
+// 3. 实现测试夹具(fixture)来简化测试设置
+
+// TODO: 实现测试夹具和完整的测试用例
+```
+
+---
+
+## 💡 本课要点总结
+
+### 错误处理
+1. **错误代码系统**: 统一的错误代码和消息
+2. **错误检测**: 及早检测错误并提供明确信息
+3. **资源管理**: 确保在错误情况下释放资源
+
+### 异常处理
+1. **setjmp/longjmp**: C语言中模拟异常处理
+2. **异常上下文**: 管理异常信息和处理流程
+3. **嵌套异常**: 处理多层函数调用中的异常
+
+### 日志系统
+1. **日志级别**: 不同严重程度的日志分类
+2. **日志格式**: 时间戳、位置、消息等信息
+3. **日志轮转**: 管理日志文件大小和备份
+
+### 调试技巧
+1. **调试宏**: 条件编译和调试信息输出
+2. **内存检测**: 跟踪内存分配和释放
+3. **性能测量**: 记录函数执行时间
+
+### 单元测试
+1. **测试框架**: 简单的测试断言和报告
+2. **测试用例**: 针对各个功能的测试
+3. **测试套件**: 组织和管理测试用例
+
+---
+
+## 🎯 下一步学习
+
+在下一课中，我们将学习：
+- **第9课：高级功能扩展** - 如何为学生管理系统添加高级功能
+- 数据分析与统计
+- 导入导出功能
+- 用户权限管理
+- 网络功能
+
+---
+
+## 📚 扩展阅读
+
+- C语言错误处理最佳实践
+- 内存泄漏检测工具使用
+- 单元测试框架比较
+- 日志系统设计模式
+
+---
+
+**上一课**: [第7课：用户界面设计](07-user-interface.md)  
+**下一课**: [第9课：高级功能扩展](09-advanced-features.md)  
+**返回**: [教程目录](README.md)

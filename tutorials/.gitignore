@@ -1,0 +1,104 @@
+# 编译输出文件
+build/
+*.o
+*.obj
+*.exe
+*.out
+*.app
+*.dSYM/
+
+# 调试文件
+*.gdb_history
+*.pdb
+core
+core.*
+vgcore.*
+
+# 临时文件
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# IDE和编辑器文件
+.vscode/settings.json.bak
+.idea/
+*.sublime-*
+*.code-workspace
+
+# 日志文件
+*.log
+log/
+logs/
+
+# 数据文件（如果不需要版本控制）
+*.dat
+*.bin
+data/
+students.txt
+students.csv
+students.json
+
+# 文档生成文件
+docs/html/
+docs/latex/
+*.pdf
+
+# 测试覆盖率文件
+*.gcov
+*.gcda
+*.gcno
+coverage/
+
+# 静态分析报告
+cppcheck-report.xml
+scan-build-*/
+
+# 内存检查报告
+valgrind-*.log
+memcheck-*.log
+
+# 性能分析文件
+gmon.out
+perf.data*
+callgrind.out.*
+
+# 打包文件
+*.tar.gz
+*.zip
+*.7z
+dist/
+release/
+
+# 系统文件
+.fuse_hidden*
+.nfs*
+
+# 备份文件
+*.bak
+*.backup
+*.orig
+
+# 配置文件（如果包含敏感信息）
+config.local
+.env
+
+# 编译器和工具生成的文件
+.depend
+.deps/
+*.d
+Makefile.bak
+
+# 自动生成的文档
+Doxygen/
+
+# 测试结果
+test-results/
+*.test
+
+# 本地开发配置
+.local/
+local.mk

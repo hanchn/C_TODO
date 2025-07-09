@@ -1,0 +1,515 @@
+{
+    "// 学生管理系统教程 - VS Code 任务配置": "",
+    "// 提供便捷的编译、运行和调试任务": "",
+    
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "编译所有程序",
+            "type": "shell",
+            "command": "make",
+            "args": ["all"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": "$gcc",
+            "detail": "编译所有示例、练习和解决方案",
+            "options": {
+                "cwd": "${workspaceFolder}/tutorials"
+            }
+        },
+        {
+            "label": "编译示例程序",
+            "type": "shell",
+            "command": "make",
+            "args": ["examples"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": "$gcc",
+            "detail": "只编译示例程序",
+            "options": {
+                "cwd": "${workspaceFolder}/tutorials"
+            }
+        },
+        {
+            "label": "编译解决方案",
+            "type": "shell",
+            "command": "make",
+            "args": ["solutions"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": "$gcc",
+            "detail": "只编译解决方案",
+            "options": {
+                "cwd": "${workspaceFolder}/tutorials"
+            }
+        },
+        {
+            "label": "编译调试版本",
+            "type": "shell",
+            "command": "make",
+            "args": ["debug"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": "$gcc",
+            "detail": "编译带调试信息的版本",
+            "options": {
+                "cwd": "${workspaceFolder}/tutorials"
+            }
+        },
+        {
+            "label": "运行所有示例",
+            "type": "shell",
+            "command": "make",
+            "args": ["run-examples"],
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "运行所有示例程序",
+            "options": {
+                "cwd": "${workspaceFolder}/tutorials"
+            },
+            "dependsOn": "编译示例程序"
+        },
+        {
+            "label": "运行所有解决方案",
+            "type": "shell",
+            "command": "make",
+            "args": ["run-solutions"],
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "运行所有解决方案",
+            "options": {
+                "cwd": "${workspaceFolder}/tutorials"
+            },
+            "dependsOn": "编译解决方案"
+        },
+        {
+            "label": "运行C语言基础示例",
+            "type": "shell",
+            "command": "make",
+            "args": ["run-basic"],
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "运行第1课示例：C语言基础",
+            "options": {
+                "cwd": "${workspaceFolder}/tutorials"
+            }
+        },
+        {
+            "label": "运行结构体数组示例",
+            "type": "shell",
+            "command": "make",
+            "args": ["run-struct"],
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "运行第2课示例：结构体与数组",
+            "options": {
+                "cwd": "${workspaceFolder}/tutorials"
+            }
+        },
+        {
+            "label": "运行文件操作示例",
+            "type": "shell",
+            "command": "make",
+            "args": ["run-file"],
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "运行第3课示例：文件操作",
+            "options": {
+                "cwd": "${workspaceFolder}/tutorials"
+            }
+        },
+        {
+            "label": "运行练习1解决方案",
+            "type": "shell",
+            "command": "make",
+            "args": ["run-solution1"],
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "运行练习1解决方案：C语言基础",
+            "options": {
+                "cwd": "${workspaceFolder}/tutorials"
+            }
+        },
+        {
+            "label": "运行练习2解决方案",
+            "type": "shell",
+            "command": "make",
+            "args": ["run-solution2"],
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "运行练习2解决方案：结构体与数组",
+            "options": {
+                "cwd": "${workspaceFolder}/tutorials"
+            }
+        },
+        {
+            "label": "运行练习3解决方案",
+            "type": "shell",
+            "command": "make",
+            "args": ["run-solution3"],
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "运行练习3解决方案：文件操作",
+            "options": {
+                "cwd": "${workspaceFolder}/tutorials"
+            }
+        },
+        {
+            "label": "运行测试",
+            "type": "shell",
+            "command": "make",
+            "args": ["test"],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "运行所有测试",
+            "options": {
+                "cwd": "${workspaceFolder}/tutorials"
+            }
+        },
+        {
+            "label": "验证代码质量",
+            "type": "shell",
+            "command": "make",
+            "args": ["validate"],
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "验证代码质量和编译警告",
+            "options": {
+                "cwd": "${workspaceFolder}/tutorials"
+            }
+        },
+        {
+            "label": "内存检查",
+            "type": "shell",
+            "command": "make",
+            "args": ["memcheck"],
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "使用Valgrind进行内存泄漏检查",
+            "options": {
+                "cwd": "${workspaceFolder}/tutorials"
+            }
+        },
+        {
+            "label": "静态代码分析",
+            "type": "shell",
+            "command": "make",
+            "args": ["analyze"],
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "使用Cppcheck进行静态代码分析",
+            "options": {
+                "cwd": "${workspaceFolder}/tutorials"
+            }
+        },
+        {
+            "label": "格式化代码",
+            "type": "shell",
+            "command": "make",
+            "args": ["format"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "detail": "使用clang-format格式化所有C代码",
+            "options": {
+                "cwd": "${workspaceFolder}/tutorials"
+            }
+        },
+        {
+            "label": "清理编译文件",
+            "type": "shell",
+            "command": "make",
+            "args": ["clean"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "detail": "清理所有编译生成的文件",
+            "options": {
+                "cwd": "${workspaceFolder}/tutorials"
+            }
+        },
+        {
+            "label": "完全清理",
+            "type": "shell",
+            "command": "make",
+            "args": ["clean-all"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "detail": "清理所有生成的文件（包括临时文件）",
+            "options": {
+                "cwd": "${workspaceFolder}/tutorials"
+            }
+        },
+        {
+            "label": "项目统计",
+            "type": "shell",
+            "command": "make",
+            "args": ["stats"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "显示项目统计信息",
+            "options": {
+                "cwd": "${workspaceFolder}/tutorials"
+            }
+        },
+        {
+            "label": "生成文档",
+            "type": "shell",
+            "command": "make",
+            "args": ["docs"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "detail": "使用Doxygen生成API文档",
+            "options": {
+                "cwd": "${workspaceFolder}/tutorials"
+            }
+        },
+        {
+            "label": "创建发布包",
+            "type": "shell",
+            "command": "make",
+            "args": ["package"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "detail": "创建项目发布包",
+            "options": {
+                "cwd": "${workspaceFolder}/tutorials"
+            }
+        },
+        {
+            "label": "编译当前文件",
+            "type": "shell",
+            "command": "gcc",
+            "args": [
+                "-Wall",
+                "-Wextra",
+                "-std=c99",
+                "-g",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}",
+                "${file}",
+                "-lm"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": "$gcc",
+            "detail": "编译当前打开的C文件",
+            "options": {
+                "cwd": "${fileDirname}"
+            }
+        },
+        {
+            "label": "运行当前文件",
+            "type": "shell",
+            "command": "${fileDirname}/${fileBasenameNoExtension}",
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "运行当前编译的程序",
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "dependsOn": "编译当前文件"
+        },
+        {
+            "label": "调试当前文件",
+            "type": "shell",
+            "command": "gcc",
+            "args": [
+                "-Wall",
+                "-Wextra",
+                "-std=c99",
+                "-g3",
+                "-O0",
+                "-DDEBUG",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}_debug",
+                "${file}",
+                "-lm"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": "$gcc",
+            "detail": "编译当前文件的调试版本",
+            "options": {
+                "cwd": "${fileDirname}"
+            }
+        },
+        {
+            "label": "显示帮助",
+            "type": "shell",
+            "command": "make",
+            "args": ["help"],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "显示Makefile帮助信息",
+            "options": {
+                "cwd": "${workspaceFolder}/tutorials"
+            }
+        }
+    ],
+    "inputs": [
+        {
+            "id": "exerciseNumber",
+            "description": "请输入练习编号 (1-9)",
+            "default": "1",
+            "type": "promptString"
+        },
+        {
+            "id": "programName",
+            "description": "请输入程序名称",
+            "default": "main",
+            "type": "promptString"
+        }
+    ]
+}
