@@ -10,6 +10,8 @@ void demonstrate_variables();
 void demonstrate_functions();
 void demonstrate_pointers();
 void demonstrate_strings();
+int add_numbers(int a, int b);
+float calculate_average(float scores[], int count);
 
 // 主函数
 int main() {
